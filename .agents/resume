@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# This repository has no persistent services or authentication to restore.
-exit 0
+# MariaDB does not survive an orb pause; restart it for the test suite.
+.agents/test-db

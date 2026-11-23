@@ -3,3 +3,4 @@ node_modules
 vendor
 .phpcs-cache
 .amp/portals/*
+.phpunit.result.cache

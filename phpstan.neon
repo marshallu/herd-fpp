@@ -10,3 +10,4 @@ parameters:
 		- phpstan-bootstrap.php
 	scanFiles:
 		- vendor/php-stubs/wp-cli-stubs/wp-cli-stubs.php
+		- vendor/php-stubs/wp-cli-stubs/wp-cli-tools-stubs.php

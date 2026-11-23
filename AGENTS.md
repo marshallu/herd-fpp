@@ -5,13 +5,14 @@ Herd Focal Point Picker is a WordPress plugin that stores a focal point per imag
 ## Layout
 
 - `herd-fpp.php` boots the plugin on `plugins_loaded`, and stays paused while the original plugin is active.
-- `includes/` holds the PHP: the `Herd_FPP_Position` and `Herd_FPP_Focal_Point` value classes, public functions, the compatibility names, the attachment field, the image attributes filter, and WP-CLI.
+- `includes/` holds the PHP: the `Herd_FPP_Position` and `Herd_FPP_Focal_Point` value classes, public functions, the compatibility names, the attachment field, the image and content image filters, and WP-CLI.
 - `assets/` holds the admin script and styles. They are plain files with no build step and no dependencies; keep it that way.
 
 ## Checks
 
 - `composer lint` runs PHPCS with WordPress and VIP rules.
 - `composer analyse` runs PHPStan.
+- `composer test` runs the PHPUnit suite in `tests/` against a real WordPress install (see README for the database). Tests assert the behavior themes written for hirasso/focal-point-picker rely on; keep them passing unchanged.
 
 UI changes need checking in the media modal (Media Library and the select-image sidebar) and on the Edit Media screen, because each renders the image preview differently.
 

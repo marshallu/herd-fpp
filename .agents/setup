@@ -11,7 +11,7 @@ run_step() {
 	printf '<== %s (%ss)\n' "$label" "$(( SECONDS - started_at ))"
 }
 
-required_packages=( composer php-cli php-mbstring php-xml )
+required_packages=( composer php-cli php-mbstring php-xml php-mysql php-gd mariadb-server )
 missing_packages=()
 
 for package in "${required_packages[@]}"; do
@@ -29,3 +29,4 @@ else
 fi
 
 run_step 'Installing PHP dependencies' composer install --no-interaction --prefer-dist --no-progress
+run_step 'Preparing the test database' .agents/test-db

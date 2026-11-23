@@ -58,6 +58,18 @@ Images rendered by `wp_get_attachment_image()` get a `focal-point-image` class a
 }
 ```
 
+### Images in post content
+
+Images in post content, such as Image blocks and Classic editor images, are saved as HTML and never pass through `wp_get_attachment_image()`. They get the same two custom properties, but not the `focal-point-image` class, so existing theme CSS aimed at that class doesn't start cropping inline images:
+
+```css
+.wp-block-image img {
+	object-position:
+		calc(var(--focal-point-left, 0.5) * 100%)
+		calc(var(--focal-point-top, 0.5) * 100%);
+}
+```
+
 ## Changing the default position
 
 The default is the center. Return a `Herd_FPP_Position` from the `herd_fpp_default_position` filter to change it:
@@ -76,7 +88,7 @@ wp herd-fpp apply-default-position 23 42 999   # specific images
 wp herd-fpp apply-default-position --all       # every image (asks first; --yes to skip)
 ```
 
-`wp fcp apply-default-position` still works too.
+`--all` works through the library 100 images at a time and clears in-memory caches between batches, so it is safe on large VIP media libraries. `wp fcp apply-default-position` still works too.
 
 ## Compatibility with hirasso/focal-point-picker
 
@@ -95,6 +107,9 @@ Differences, all fixes:
 composer install
 composer lint      # PHPCS with WordPress and VIP rules
 composer analyse   # PHPStan
+composer test      # PHPUnit against a real WordPress install
 ```
+
+The tests need a MySQL or MariaDB database; `tests/wp-tests-config.php` reads `WP_TESTS_DB_NAME`, `WP_TESTS_DB_USER`, `WP_TESTS_DB_PASSWORD` and `WP_TESTS_DB_HOST`, defaulting to `wp_tests`, `wp`, `wp` and `127.0.0.1`. GitHub Actions runs all three checks on every push and pull request.
 
 Requires WordPress 6.5+ and PHP 8.2+. There is no build step: `assets/` ships as written.

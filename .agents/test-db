@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Start MariaDB and create the database tests/wp-tests-config.php expects.
+set -euo pipefail
+
+sudo service mariadb start >/dev/null 2>&1 || true
+sudo mysql -e "CREATE DATABASE IF NOT EXISTS wp_tests; CREATE USER IF NOT EXISTS 'wp'@'localhost' IDENTIFIED BY 'wp'; GRANT ALL ON wp_tests.* TO 'wp'@'localhost';"
