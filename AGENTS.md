@@ -1,10 +1,10 @@
 # Repository Guidelines
 
-Herd Focal Point Picker is a WordPress plugin that stores a focal point per image. It is a drop-in replacement for hirasso/focal-point-picker, so everything listed under "Compatibility" in README.md is public API: the `focalpoint` meta shape, `fcp_get_focalpoint()`, the `Hirasso\FocalPointPicker\*` aliases, the `hirasso/fcp/default-position` filter, the `fcp` WP-CLI command, and the `focal-point-image` class and `--focal-point-*` properties. Do not rename or reshape them.
+Herd Focal Point Picker is a WordPress plugin that stores a focal point per image. Everything listed under "Legacy names" in README.md is public API existing themes rely on: the `focalpoint` meta shape, `fcp_get_focalpoint()`, the `fcp` WP-CLI command, and the `focal-point-image` class and `--focal-point-*` properties. Do not rename or reshape them.
 
 ## Layout
 
-- `herd-fpp.php` boots the plugin on `plugins_loaded`, and stays paused while the original plugin is active.
+- `herd-fpp.php` boots the plugin on `plugins_loaded`, and stays paused while another focal point picker using the same field is active.
 - `includes/` holds the PHP: the `Herd_FPP_Position` and `Herd_FPP_Focal_Point` value classes, public functions, the compatibility names, the attachment field, the image and content image filters, and WP-CLI.
 - `assets/` holds the admin script and styles. They are plain files with no build step and no dependencies; keep it that way.
 
@@ -12,7 +12,7 @@ Herd Focal Point Picker is a WordPress plugin that stores a focal point per imag
 
 - `composer lint` runs PHPCS with WordPress and VIP rules.
 - `composer analyse` runs PHPStan.
-- `composer test` runs the PHPUnit suite in `tests/` against a real WordPress install (see README for the database). Tests assert the behavior themes written for hirasso/focal-point-picker rely on; keep them passing unchanged.
+- `composer test` runs the PHPUnit suite in `tests/` against a real WordPress install (see README for the database). Tests assert the behavior existing themes rely on; keep them passing unchanged.
 
 UI changes need checking in the media modal (Media Library and the select-image sidebar) and on the Edit Media screen, because each renders the image preview differently.
 

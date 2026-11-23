@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Herd Focal Point Picker
  * Plugin URI: https://github.com/marshallu/herd-fpp
- * Description: Pick a focal point for each image in the Media Library. A drop-in replacement for hirasso/focal-point-picker that reads and writes the same data.
+ * Description: Pick a focal point for each image in the Media Library.
  * Version: 1.0.0
  * Requires at least: 6.5
  * Requires PHP: 8.2
@@ -22,8 +22,8 @@ define( 'HERD_FPP_DIR', plugin_dir_path( __FILE__ ) );
 /**
  * Post meta key holding an image's focal point as `[ 'left' => float, 'top' => float ]`.
  *
- * The key and shape are the ones hirasso/focal-point-picker uses, so images
- * picked with that plugin keep their focal points here and the other way round.
+ * The key and shape are a long-standing convention that existing images and
+ * themes rely on; do not change them.
  */
 define( 'HERD_FPP_META_KEY', 'focalpoint' );
 
@@ -32,12 +32,11 @@ require_once HERD_FPP_DIR . 'includes/class-herd-fpp-focal-point.php';
 require_once HERD_FPP_DIR . 'includes/herd-fpp-functions.php';
 
 /**
- * Boot once every plugin has loaded, so we can tell whether
- * hirasso/focal-point-picker is active too, whatever the load order.
+ * Boot once every plugin has loaded, so we can tell whether another focal
+ * point picker that uses the same field is active too, whatever the load order.
  *
- * Both plugins edit the same field, so running them together would show two
- * pickers on every image. While the original is active this plugin stays out of
- * the way and asks for it to be deactivated.
+ * Running both would show two pickers on every image, so while the other one
+ * is active this plugin stays out of the way and asks for it to be deactivated.
  */
 function herd_fpp_boot() {
 	if ( defined( 'WPFP_PLUGIN_DIR' ) ) {
@@ -64,7 +63,7 @@ function herd_fpp_conflict_notice() {
 	}
 
 	wp_admin_notice(
-		esc_html__( 'Herd Focal Point Picker is paused because the Focal Point Picker plugin is also active. Deactivate Focal Point Picker; your existing focal points carry over unchanged.', 'herd-fpp' ),
+		esc_html__( 'Herd Focal Point Picker is paused because another focal point picker plugin is active. Deactivate it; your existing focal points carry over unchanged.', 'herd-fpp' ),
 		array( 'type' => 'warning' )
 	);
 }

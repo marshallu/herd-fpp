@@ -2,14 +2,7 @@
 
 Pick a focal point for each image in the WordPress Media Library, so themes can crop images without cutting off what matters.
 
-A drop-in replacement for [hirasso/focal-point-picker](https://github.com/hirasso/focal-point-picker): it reads and writes the same data and keeps the same theme API, so switching needs no migration and no theme changes.
-
-## Switching from Focal Point Picker
-
-1. Install and activate Herd Focal Point Picker.
-2. Deactivate Focal Point Picker. Until you do, this plugin stays paused and shows a notice, so you never get two pickers.
-
-Existing focal points carry over: both plugins store them in the `focalpoint` post meta as `[ 'left' => 0.0–1.0, 'top' => 0.0–1.0 ]`.
+Focal points are stored in the `focalpoint` post meta as `[ 'left' => 0.0–1.0, 'top' => 0.0–1.0 ]`. If another focal point picker plugin using the same field is active, this plugin stays paused and shows a notice until it is deactivated, so you never get two pickers; existing focal points carry over.
 
 ## Picking a focal point
 
@@ -79,8 +72,6 @@ The default is the center. Return a `Herd_FPP_Position` from the `herd_fpp_defau
 add_filter( 'herd_fpp_default_position', fn() => new Herd_FPP_Position( left: 0.5, top: 0 ) );
 ```
 
-The original `hirasso/fcp/default-position` filter and `Hirasso\FocalPointPicker\Position` class also still work.
-
 Changing the default affects images without a stored focal point. To apply it to images that already have one:
 
 ```shell
@@ -90,16 +81,9 @@ wp herd-fpp apply-default-position --all       # every image (asks first; --yes 
 
 `--all` works through the library 100 images at a time and clears in-memory caches between batches, so it is safe on large VIP media libraries. `wp fcp apply-default-position` still works too.
 
-## Compatibility with hirasso/focal-point-picker
+## Legacy names
 
-Kept as-is: the `focalpoint` meta, `fcp_get_focalpoint()`, the `Hirasso\FocalPointPicker\FocalPoint` and `Position` class names, the `hirasso/fcp/default-position` filter, the `wp fcp apply-default-position` command, the `focal-point-image` class and `--focal-point-*` properties, and the `focalpoint-input` attachment field.
-
-Differences, all fixes:
-
-- An image's existing inline `style` is kept intact; the original appended the custom properties without a `;`, breaking the last existing declaration.
-- `isDefaultPosition()` compares left with left and top with top; the original swapped them.
-- Stored values are clamped to 0–1.
-- No jQuery or jQuery UI in the picker; it also works by keyboard.
+Existing themes and scripts rely on these, so they are kept as-is: the `focalpoint` meta, `fcp_get_focalpoint()`, the `wp fcp apply-default-position` command, the `focal-point-image` class and `--focal-point-*` properties, and the `focalpoint-input` attachment field.
 
 ## Development
 

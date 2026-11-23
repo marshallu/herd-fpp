@@ -19,8 +19,8 @@ defined( 'ABSPATH' ) || exit;
  *             calc(var(--focal-point-top, 0.5) * 100%);
  *     }
  *
- * The class and property names match hirasso/focal-point-picker's, so theme
- * CSS written for it keeps working.
+ * The class and property names are legacy names that existing theme CSS
+ * relies on; do not change them.
  *
  * @param array<string, mixed> $attr       Image attributes.
  * @param WP_Post              $attachment Image attachment.

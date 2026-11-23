@@ -14,7 +14,7 @@ class Picker_Test extends WP_UnitTestCase {
 		$this->image_id = self::factory()->attachment->create_upload_object( DIR_TESTDATA . '/images/canola.jpg' );
 	}
 
-	public function test_the_field_shows_the_stored_point_under_the_original_name(): void {
+	public function test_the_field_shows_the_stored_point_under_the_legacy_name(): void {
 		update_post_meta( $this->image_id, 'focalpoint', array( 'left' => 0.75, 'top' => 0.25 ) );
 
 		$fields = apply_filters( 'attachment_fields_to_edit', array(), get_post( $this->image_id ) );
@@ -24,7 +24,7 @@ class Picker_Test extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'value="0.75 0.25"', $fields['focalpoint-input']['html'] );
 	}
 
-	public function test_saving_stores_the_point_in_the_original_meta_shape(): void {
+	public function test_saving_stores_the_point_in_the_legacy_meta_shape(): void {
 		$this->save( '0.3 0.7' );
 
 		$this->assertSame( array( 'left' => 0.3, 'top' => 0.7 ), get_post_meta( $this->image_id, 'focalpoint', true ) );

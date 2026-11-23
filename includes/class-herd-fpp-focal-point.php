@@ -7,8 +7,8 @@
 
 defined( 'ABSPATH' ) || exit;
 
-// The camelCase property names are the public API themes already use with
-// hirasso/focal-point-picker, so they stay as they are.
+// The camelCase property names are the legacy public API existing themes use,
+// so they stay as they are.
 // phpcs:disable WordPress.NamingConventions.ValidVariableName.PropertyNotSnakeCase, WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 
 /**
@@ -111,7 +111,7 @@ final class Herd_FPP_Focal_Point {
 	/**
 	 * Whether this focal point is the default position.
 	 */
-	public function isDefaultPosition(): bool { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid -- Public API carried over from hirasso/focal-point-picker.
+	public function isDefaultPosition(): bool { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid -- Legacy public API kept for existing themes.
 		$default = herd_fpp_default_position();
 
 		return $this->left === $default->left && $this->top === $default->top;

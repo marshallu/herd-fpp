@@ -15,9 +15,8 @@ defined( 'ABSPATH' ) || exit;
  * 0.25), and anything else as the center. Values are clamped to the image and
  * rounded to two decimals, the precision the picker works in.
  *
- * Its constructor parameters are named `left` and `top` because themes written
- * for hirasso/focal-point-picker construct it with named arguments, such as
- * `new Position( top: 0 )`, through the class alias in herd-fpp-compat.php.
+ * Its constructor parameters are named so filters can pass one coordinate,
+ * such as `new Herd_FPP_Position( top: 0 )`.
  */
 final class Herd_FPP_Position {
 

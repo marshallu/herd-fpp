@@ -1,9 +1,9 @@
 <?php
 /**
- * Reading focal points, and the API kept from hirasso/focal-point-picker.
+ * Reading focal points, and the legacy API existing themes use.
  *
- * Expected values come from that plugin's documented behavior, so these tests
- * fail if a change breaks themes written for it.
+ * Expected values come from the legacy API's documented behavior, so these
+ * tests fail if a change breaks existing themes.
  *
  * @package herd-fpp
  */
@@ -19,12 +19,12 @@ class Focal_Point_Test extends WP_UnitTestCase {
 		$this->image_id = self::factory()->attachment->create_upload_object( DIR_TESTDATA . '/images/canola.jpg' );
 	}
 
-	public function test_reads_focal_points_saved_by_the_original_plugin(): void {
+	public function test_reads_focal_points_in_the_legacy_meta_shape(): void {
 		update_post_meta( $this->image_id, 'focalpoint', array( 'left' => 0.75, 'top' => 0.25 ) );
 
 		$focal_point = fcp_get_focalpoint( $this->image_id );
 
-		$this->assertInstanceOf( Hirasso\FocalPointPicker\FocalPoint::class, $focal_point );
+		$this->assertInstanceOf( Herd_FPP_Focal_Point::class, $focal_point );
 		$this->assertSame(
 			array(
 				'left'        => 0.75,
@@ -48,20 +48,13 @@ class Focal_Point_Test extends WP_UnitTestCase {
 		$this->assertTrue( $focal_point->isDefaultPosition() );
 	}
 
-	public function test_the_original_default_position_filter_still_applies(): void {
-		add_filter( 'hirasso/fcp/default-position', fn() => new Hirasso\FocalPointPicker\Position( top: 0 ) );
+	public function test_the_default_position_filter_applies(): void {
+		add_filter( 'herd_fpp_default_position', fn() => new Herd_FPP_Position( top: 0 ) );
 
 		$focal_point = fcp_get_focalpoint( $this->image_id );
 
 		$this->assertSame( array( 0.5, 0.0 ), array( $focal_point->left, $focal_point->top ) );
 		$this->assertTrue( $focal_point->isDefaultPosition() );
-	}
-
-	public function test_the_herd_filter_overrides_the_original_one(): void {
-		add_filter( 'hirasso/fcp/default-position', fn() => new Herd_FPP_Position( top: 0 ) );
-		add_filter( 'herd_fpp_default_position', fn() => new Herd_FPP_Position( 0.2, 0.8 ) );
-
-		$this->assertEquals( new Herd_FPP_Position( 0.2, 0.8 ), herd_fpp_default_position() );
 	}
 
 	public function test_a_filter_returning_something_else_falls_back_to_the_center(): void {
@@ -71,8 +64,8 @@ class Focal_Point_Test extends WP_UnitTestCase {
 	}
 
 	public function test_is_default_position_compares_left_with_left_and_top_with_top(): void {
-		// The original compared x with the default top and y with the default
-		// left, so a point mirroring the default counted as the default.
+		// A point mirroring the default, with left and top swapped, must not
+		// count as the default.
 		add_filter( 'herd_fpp_default_position', fn() => new Herd_FPP_Position( 0.5, 0 ) );
 		update_post_meta( $this->image_id, 'focalpoint', array( 'left' => 0, 'top' => 0.5 ) );
 

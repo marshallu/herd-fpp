@@ -128,5 +128,5 @@ function herd_fpp_cli_image_batch( int $page ): WP_Query {
 
 WP_CLI::add_command( 'herd-fpp apply-default-position', 'herd_fpp_cli_apply_default_position' );
 
-// The command name hirasso/focal-point-picker used, for existing scripts.
+// Legacy command name, for existing scripts.
 WP_CLI::add_command( 'fcp apply-default-position', 'herd_fpp_cli_apply_default_position' );

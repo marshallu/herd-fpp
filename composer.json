@@ -1,6 +1,6 @@
 {
 	"name": "marshallu/herd-fpp",
-	"description": "Focal point picker for WordPress images. A drop-in replacement for hirasso/focal-point-picker.",
+	"description": "Focal point picker for WordPress images.",
 	"keywords": ["wordpress", "plugin", "focal point", "media"],
 	"homepage": "https://github.com/marshallu/herd-fpp",
 	"license": "MIT",

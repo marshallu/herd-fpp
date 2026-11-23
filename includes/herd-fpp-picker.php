@@ -25,8 +25,8 @@ add_action( 'admin_enqueue_scripts', 'herd_fpp_enqueue_assets' );
  * attachment fields: on change in the media modal, on Update on the Edit Media
  * screen.
  *
- * The field key `focalpoint-input` and input name `focalpoint` match
- * hirasso/focal-point-picker's, so admin CSS or scripts aimed at it still apply.
+ * The field key `focalpoint-input` and input name `focalpoint` are legacy names
+ * kept so existing admin CSS or scripts aimed at them still apply.
  *
  * @param array<string, array<string, mixed>> $fields Attachment fields.
  * @param WP_Post                             $post   Attachment.
